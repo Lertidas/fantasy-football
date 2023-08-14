@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface PlayerRepository extends JpaRepository<PlayerEntity, Integer> {
     List<PlayerEntity> findAllByPosition(String position);
-    void deleteByPosition(String position);
+    void deleteByPositionIn(List<String> positions);
 }

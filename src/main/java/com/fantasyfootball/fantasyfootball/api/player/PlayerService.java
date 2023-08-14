@@ -1,5 +1,6 @@
 package com.fantasyfootball.fantasyfootball.api.player;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +18,19 @@ public class PlayerService {
     public List<PlayerEntity> getPlayersByPosition(String position) {
         return playerRepository.findAllByPosition(position);
     }
-
-    public void deletePlayersByPosition(String position) {
-        playerRepository.deleteByPosition(position);
+    public List<PlayerEntity> addPlayers(List<PlayerEntity> players) {
+        return playerRepository.saveAll(players);
     }
 
-    public void addPlayers(List<PlayerEntity> playerEntities) {
-        playerRepository.saveAll(playerEntities);
+    @Transactional
+    public boolean deletePlayersByPosition(List<String> positions) {
+        boolean flag = true;
+        try {
+            playerRepository.deleteByPositionIn(positions);
+        }
+        catch (Exception e) {
+            flag = false;
+        }
+        return flag;
     }
 }

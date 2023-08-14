@@ -1,13 +1,10 @@
 package com.fantasyfootball.fantasyfootball.api.rankingSheet;
 
-import com.fantasyfootball.fantasyfootball.api.player.PlayerEntity;
 import com.fantasyfootball.fantasyfootball.api.player.PlayerService;
+import com.fantasyfootball.fantasyfootball.util.FIleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class RankingSheetService {
@@ -16,10 +13,7 @@ public class RankingSheetService {
     private PlayerService playerService;
     public boolean uploadRankingSheet(MultipartFile file, String position) {
         try {
-            // Iterate over file and add all players to list of players to add
-            List<PlayerEntity> playerEntities = new ArrayList<>();
-
-             playerService.deletePlayersByPosition(position);
+            playerService.addPlayers(FIleUtil.createPlayerEntitiesFromFile(file, position));
             return true;
         }
         catch (Exception e) {

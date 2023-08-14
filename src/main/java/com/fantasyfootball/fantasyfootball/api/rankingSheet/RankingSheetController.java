@@ -13,7 +13,7 @@ public class RankingSheetController {
     private RankingSheetService rankingSheetService;
 
     @PostMapping
-    public ResponseEntity<Boolean> getPlayersByPosition(@RequestParam("file") MultipartFile file, @RequestParam("position") String position) {
+    public ResponseEntity<Boolean> addPlayersByPosition(@RequestParam("file") MultipartFile file, @RequestParam("position") String position) {
         boolean result = rankingSheetService.uploadRankingSheet(file, position);
         return ResponseEntity.status(result ? HttpStatus.OK : HttpStatus.BAD_REQUEST).body(result);
     }
